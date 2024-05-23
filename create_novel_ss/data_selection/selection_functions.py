@@ -199,22 +199,18 @@ def candidate_comb_activities(metadata):
     # exclude all images containing more than one species
     metadata_df = metadata_df.drop_duplicates('capture_id', keep=False)
 
-    print('\n\n** before:', len(metadata_df))
-
     # select only images containing both known activities and no novel activity
     seq_ids = metadata_df['capture_id'].loc[
         (
-            (metadata_df['question__standing'] >= ACT_THRESHOLDS['known']) & 
-            (metadata_df['question__moving'] >= ACT_THRESHOLDS['known'])
+            (metadata_df['question__standing'] >= ACT_THRESHOLDS['known-comb_act']) & 
+            (metadata_df['question__moving'] >= ACT_THRESHOLDS['known-comb_act'])
         ) & 
         (
-            (metadata_df['question__eating'] < ACT_THRESHOLDS['novel']) & 
-            (metadata_df['question__resting'] < ACT_THRESHOLDS['novel'])
+            (metadata_df['question__eating'] < ACT_THRESHOLDS['novel-comb_act']) & 
+            (metadata_df['question__resting'] < ACT_THRESHOLDS['novel-comb_act'])
         )
         ]
     metadata_df = metadata_df.loc[metadata_df['capture_id'].isin(seq_ids)].reset_index()
-
-    print('\n\n** after:', len(metadata_df))
 
     return metadata_df[['capture_id', 'question__species']]
 

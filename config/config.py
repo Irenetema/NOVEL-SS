@@ -73,9 +73,13 @@ FREQ_NOVEL_SPECIES = {
 }
 
 # Activities filtering thresholds
+# ** Due to the small number of images in novel combination of activities,
+# ** the threshold is loosen for that novelty type
 ACT_THRESHOLDS = {
     'known': 0.95, 
-    'novel': 0.05
+    'novel': 0.05,
+    'known-comb_act': 0.75,  
+    'novel-comb_act': 0.15 
 }
 
 # Species ID to name map

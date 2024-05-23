@@ -24,7 +24,6 @@ SerengetiPark = LocationInfo(
 
 def preprocess_metadata(meta_data):
     # discard blank and human classes
-    # p_metadata = deepcopy(meta_data.loc[meta_data['question__species'] != 'human'])
     p_metadata = deepcopy(meta_data.loc[~meta_data['question__species'].isin(['blank', 'human'])])
 
     # lower case the species name to reduce label (redundancy)
@@ -155,7 +154,7 @@ def main():
         # *** save labels
         assert os.path.exists(args.output_dir)
 
-        labels_dir = args.output_dir + 'labels/'
+        labels_dir = args.output_dir + 'label_candidates/'
 
         # create labels_dir if it does not exist and save image labels for novelty type
         Path(labels_dir).mkdir(parents=True, exist_ok=True)
