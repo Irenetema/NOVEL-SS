@@ -1,6 +1,6 @@
-# NOVEL-SS Dataset 
+# NOVEL-SS: A Dataset for Integrated Novelty-Aware Computer Vision Systems 
 
-## Steps to download the NOVEL-SS images from the Snapshot Serengeti dataset
+## Steps to download the NOVEL-SS images
 0. Clone this NOVEL-SS repository
 1. Extract the annotations [labels/novel_ss_labels.zip'](/labels/novel_ss_labels.zip)
 2. Download the training, validation and test images  
