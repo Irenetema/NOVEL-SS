@@ -10,12 +10,6 @@
     (images_dir should be the same as 'DIR/WHERE/TO/SAVE/IMAGES' provided when downloading the images)
 
 
-## DCA (Detect-Characterize-Accommodate) baseline for NOVEL-SS
-1. Get SS server side system https://github.com/guyera/ss-api
-2. Get SS client side system https://github.com/guyera/ss-osu-system
-3. Generate validation and test trials from the NOVEL-SS labels (follow the steps in https://github.com/guyera/ss-osu-system/tree/master/umd_test_generate)
-
-
 ## NOVEL-SS Dataset Creation from the Snapshot Serengeti Cameratrap
 - Process
 ![NOVEL-SS Creation process](/create_novel_ss/NOVEL-SS_Flowchart.jpg)
