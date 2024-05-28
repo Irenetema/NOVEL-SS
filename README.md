@@ -1,7 +1,7 @@
 # NOVEL-SS: A Dataset for Integrated Novelty-Aware Computer Vision Systems 
 
 * NOVEL-SS
-![NOVEL-SS Novelty Categories](/create_novel_ss/sample_images.pdf)
+![NOVEL-SS Novelty Categories](/create_novel_ss/sample_images.jpg)
 
 
 ## Download the NOVEL-SS images
