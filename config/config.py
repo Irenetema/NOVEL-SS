@@ -79,7 +79,7 @@ ACT_THRESHOLDS = {
     'known': 0.95, 
     'novel': 0.05,
     'known-comb_act': 0.75,  
-    'novel-comb_act': 0.15 
+    'novel-comb_act': 0.25  # 0.15 
 }
 
 # Species ID to name map

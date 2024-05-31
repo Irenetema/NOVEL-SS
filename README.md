@@ -5,7 +5,7 @@
 
 
 ## Download the NOVEL-SS images
-0. Clone this NOVEL-SS repository
+0. Clone this [NOVEL-SS repository](https://github.com/Irenetema/NOVEL_SS)
 1. Extract the annotations [labels/novel_ss_labels.zip](/labels/novel_ss_labels.zip)
 2. Download the training, validation and test images  
    Run: `python -m download_novel_ss.download_novel_ss_images --labels_dir 'PATH/TO/EXTRACTED/LABELS' --output_dir 'DIR/WHERE/TO/SAVE/IMAGES'`
