@@ -8,6 +8,8 @@
 Novelty types classes and hyper-parameters
 """
 
+SS_URL = 'https://lilawildlife.blob.core.windows.net/lila-wildlife/snapshotserengeti-unzipped/'
+
 KNOWN_MONTHS = [i for i in range(1, 13)]
 NOVEL_MONTHS = []
 
