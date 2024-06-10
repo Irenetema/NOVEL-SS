@@ -6,7 +6,7 @@
 
 ## Download the NOVEL-SS images
 0. Clone this [NOVEL-SS repository](https://github.com/Irenetema/NOVEL_SS)
-1. Extract the annotations [labels/novel_ss_labels.zip](/labels/novel_ss_labels.zip)
+1. Extract the annotations [labels/novel_ss_labels.zip](https://raw.githubusercontent.com/Irenetema/NOVEL_SS/master/labels/novel_ss_labels.zip)
 2. Download the training, validation and test images  
    Run: `python -m download_novel_ss.download_novel_ss_images --labels_dir 'PATH/TO/EXTRACTED/LABELS' --output_dir 'DIR/WHERE/TO/SAVE/IMAGES'`
 3. Create artificial novel environments (select a subset of the training set and apply transformations to simulate fog and snow effects)  
@@ -14,10 +14,20 @@
     (images_dir should be the same as 'DIR/WHERE/TO/SAVE/IMAGES' provided when downloading the images)
 
 
+
+## Croissant Format Creation
+This section provides source code for formating the NOVEL-SS dataset in croissant downloadable format. the croissant metadata can be downloaded at [labels/croissant_metadata.json](https://raw.githubusercontent.com/Irenetema/NOVEL_SS/master/labels/croissant_metadata.json)
+1. Clone the current NOVEL-SS repo if you haven't done it yet. Then execute either step 2 or 3
+2. Run `python -m croissant.make_croissant` or
+3. Follow the instructations in the jupyter notebook [croissant/make_croissant.ipynb](croissant/make_croissant.ipynb)
+
+
+
 ## DCA (Detect-Characterize-Accommodate) baseline for NOVEL-SS
-1. Get SS server side system https://github.com/guyera/ss-api
-2. Get SS client side system https://github.com/guyera/ss-osu-system
+1. Get DCA server side system https://github.com/guyera/ss-api
+2. Get DCA client side system https://github.com/guyera/ss-osu-system
 3. Generate validation and test trials from the NOVEL-SS labels (follow the steps in https://github.com/guyera/ss-osu-system/tree/master/umd_test_generate)
+
 
 
 ## NOVEL-SS Dataset Creation (from the Snapshot Serengeti Cameratrap)

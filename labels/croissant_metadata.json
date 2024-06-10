@@ -1,0 +1,393 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform"
+  },
+  "@type": "sc:Dataset",
+  "name": "NOVEL-SS",
+  "description": "Novel-Snapshot Serengeti (Novel-SS), is a benchmark derived from the Snapshot Serengeti camera trap dataset collected by a network of 225 camera traps deployed in Serengeti National Park (Tanzania). NOVEL-SS offers many forms of novelty including: novel species, novel activity, novel combination of species, novel combinationof activities, and novel environment (e.g. dawn, dusk, night time, snow and fog).",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "citeAs": "@misc{tematelewo2024novelss, title={Novel-SS: A Benchmark for Integrated Novelty-Aware Computer Vision Systems}, author={Tematelewo, Iren'e and Ullah, Amin and Guyer Alexander and Fuxin, Li and Lee, Stefan and Dietterich, Thomas G}, booktitle = {openreview}, month = {June}, year = {2024},",
+  "license": "GPL-3.0",
+  "url": "https://github.com/Irenetema/NOVEL_SS",
+  "version": "1.0",
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "jsonl-files",
+      "name": "jsonl-files",
+      "description": "NOVEL-SS training set image annotations.",
+      "contentUrl": "https://raw.githubusercontent.com/Irenetema/NOVEL_SS/master/labels/croissant_jsonl.zip",
+      "encodingFormat": "application/zip",
+      "sha256": "63aa31303b1157cfc35ced7bbb643904834bb1ad7ba4d1cb99fc4fa03a7c044c"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "train_annotations",
+      "name": "train_annotations",
+      "description": "NOVEL-SS training set image annotations.",
+      "containedIn": {
+        "@id": "jsonl-files"
+      },
+      "contentUrl": "train.jsonl",
+      "encodingFormat": "application/jsonlines"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "valid_annotations",
+      "name": "valid_annotations",
+      "description": "NOVEL-SS training set image annotations.",
+      "containedIn": {
+        "@id": "jsonl-files"
+      },
+      "contentUrl": "valid.jsonl",
+      "encodingFormat": "application/jsonlines"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "test_annotations",
+      "name": "test_annotations",
+      "description": "NOVEL-SS training set image annotations.",
+      "containedIn": {
+        "@id": "jsonl-files"
+      },
+      "contentUrl": "test.jsonl",
+      "encodingFormat": "application/jsonlines"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "images_and_bbox",
+      "name": "images_and_bbox",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "images_and_bbox/image_path",
+          "name": "image_path",
+          "description": "Snapshot Serengeti image path (e.g. S6/P07/P07_R2/S6_P07_R2_IMAG0077.JPG)",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "train_annotations"
+            },
+            "extract": {
+              "column": "image_path"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_and_bbox/image_bboxes",
+          "name": "image_bboxes",
+          "description": "bounding boxes of animal position in each images. [will update data_types=mlc.DataType.BOUNDING_BOX(mlc.Context())]",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "train_annotations"
+            },
+            "extract": {
+              "column": "bboxes"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_and_bbox/filename",
+          "name": "filename",
+          "description": "Snapshot Serengeti image name (e.g. S6_P07_R2_IMAG0077.JPG)",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "train_annotations"
+            },
+            "extract": {
+              "column": "filename"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_and_bbox/capture_id",
+          "name": "capture_id",
+          "description": "Snapshot Serengeti image sequence id (e.g., SER_S6#P07#2#29)",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "train_annotations"
+            },
+            "extract": {
+              "column": "capture_id"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_and_bbox/width",
+          "name": "width",
+          "description": "Image width (e.g., 2048)",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "train_annotations"
+            },
+            "extract": {
+              "column": "width"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_and_bbox/height",
+          "name": "height",
+          "description": "Image height (e.g., 1536)",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "train_annotations"
+            },
+            "extract": {
+              "column": "height"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_and_bbox/agent1_name",
+          "name": "agent1_name",
+          "description": "Name of animal species 1 (e.g., zebra)",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "train_annotations"
+            },
+            "extract": {
+              "column": "agent1_name"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_and_bbox/agent1_id",
+          "name": "agent1_id",
+          "description": "Id of animal species 1 (integer between 1 and 30)",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "train_annotations"
+            },
+            "extract": {
+              "column": "agent1_id"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_and_bbox/agent1_count",
+          "name": "agent1_count",
+          "description": "number of animals from species 1",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "train_annotations"
+            },
+            "extract": {
+              "column": "agent1_count"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_and_bbox/agent2_name",
+          "name": "agent2_name",
+          "description": "Name of animal species 2 (None if image contains only 1 species)",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "train_annotations"
+            },
+            "extract": {
+              "column": "agent2_name"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_and_bbox/agent2_id",
+          "name": "agent2_id",
+          "description": "Id of animal species 2 (None if image contains only 1 species)",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "train_annotations"
+            },
+            "extract": {
+              "column": "agent1_id"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_and_bbox/agent2_count",
+          "name": "agent2_count",
+          "description": "number of animals from species 2",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "train_annotations"
+            },
+            "extract": {
+              "column": "agent2_count"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_and_bbox/agent3_name",
+          "name": "agent3_name",
+          "description": "Name of animal species 3 (None if image contains only 1 species)",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "train_annotations"
+            },
+            "extract": {
+              "column": "agent3_name"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_and_bbox/agent3_id",
+          "name": "agent3_id",
+          "description": "Id of animal species 3 (None if image contains only 1 species)",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "train_annotations"
+            },
+            "extract": {
+              "column": "agent3_id"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_and_bbox/agent3_count",
+          "name": "agent1_count",
+          "description": "number of animals from species 3",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "train_annotations"
+            },
+            "extract": {
+              "column": "agent3_count"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_and_bbox/activities",
+          "name": "activities",
+          "description": "list of animal activities",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "train_annotations"
+            },
+            "extract": {
+              "column": "activities"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_and_bbox/activities_id",
+          "name": "activities_id",
+          "description": "list of ids of animal activities",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "train_annotations"
+            },
+            "extract": {
+              "column": "activities_id"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_and_bbox/environment_id",
+          "name": "environment_id",
+          "description": "id of environment (lighting condition) of the image",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "train_annotations"
+            },
+            "extract": {
+              "column": "environment_id"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "images_and_bbox/novelty_type",
+          "name": "novelty_type",
+          "description": "interger indentifying the type of novelty in the image",
+          "dataType": "sc:Integer",
+          "source": {
+            "fileObject": {
+              "@id": "train_annotations"
+            },
+            "extract": {
+              "column": "novelty_type"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
