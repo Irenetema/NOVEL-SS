@@ -28,7 +28,8 @@ def main():
     )
     parser.add_argument(
         '--output_dir',
-        default='labels/cr_json_annotations/',
+        # default='labels/cr_json_annotations/',
+        default='labels/croissant_jsonl/',
         help='Path to dir where to save the combined labels'
     )
 
@@ -36,15 +37,15 @@ def main():
 
     assert os.path.exists(args.path_to_zipped_labels)
 
-    # Merge NOVEL-SS annotations and bounding box into a single json, and
-    # create a zip obj of the json files for train, validation and test sets
+    # Merge NOVEL-SS annotations and bounding box into one single jsonl, and
+    # create a zip obj of the jsonl files for train, validation and test sets
     if not os.path.exists(args.output_dir):
         merge_annotations_n_bbox(args.path_to_zipped_labels, args.output_dir)
 
     # create croissant metadata
     metadata = croissant_format()
 
-    jsonld = epath.Path("croissant.json")
+    jsonld = epath.Path("labels/croissant_metadata.json")
     with jsonld.open("w") as f:
         f.write(json.dumps(metadata.to_json(), indent=2))
 
@@ -55,8 +56,8 @@ def main():
     dataset = mlc.Dataset(jsonld=jsonld)
     records = dataset.records(record_set="images_and_bbox")
     record = next(iter(records))
-    print("The first record:")
-    print(json.dumps(record, indent=2))
+    print("The first record:", record)
+    # print(json.dumps(record, indent=2))
     
 
 

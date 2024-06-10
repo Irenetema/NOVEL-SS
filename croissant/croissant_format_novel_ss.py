@@ -16,40 +16,36 @@ def croissant_format():
     distribution = [
         # NOVEL-SS annotations:
         mlc.FileObject(
-            id="novel_ss_annotations",
-            name="novel_ss_annotations",
-            description="NOVEL-SS training, validation and test image annotations.",
-            content_url=("https://github.com/Irenetema/NOVEL_SS/blob/master/labels/novel_ss_labels.zip"),
+            id="jsonl-files",
+            name="jsonl-files",
+            description="NOVEL-SS training set image annotations.",
+            content_url="https://raw.githubusercontent.com/Irenetema/NOVEL_SS/master/labels/croissant_jsonl.zip",
             encoding_format="application/zip",
-            sha256="main",
+            sha256="63aa31303b1157cfc35ced7bbb643904834bb1ad7ba4d1cb99fc4fa03a7c044c",
         ),
-        # *** Image annotations ***
-        # training set annotations:
         mlc.FileObject(
             id="train_annotations",
             name="train_annotations",
             description="NOVEL-SS training set image annotations.",
-            contained_in=["novel_ss_annotations"],
-            content_url="train.json",
-            encoding_format="application/json"
+            contained_in=["jsonl-files"],
+            content_url="train.jsonl",
+            encoding_format="application/jsonlines"
         ),
-        # validation set annotations:
         mlc.FileObject(
             id="valid_annotations",
             name="valid_annotations",
-            description="NOVEL-SS validation set image annotations.",
-            contained_in=["novel_ss_annotations"],
-            content_url="valid.json",
-            encoding_format="application/json"
+            description="NOVEL-SS training set image annotations.",
+            contained_in=["jsonl-files"],
+            content_url="valid.jsonl",
+            encoding_format="application/jsonlines"
         ),
-        # test set annotations:
         mlc.FileObject(
             id="test_annotations",
             name="test_annotations",
-            description="NOVEL-SS test set image annotations.",
-            contained_in=["novel_ss_annotations"],
-            content_url="test.json",
-            encoding_format="application/json"
+            description="NOVEL-SS training set image annotations.",
+            contained_in=["jsonl-files"],
+            content_url="test.jsonl",
+            encoding_format="application/jsonlines"
         ),
     ]
 
@@ -62,21 +58,191 @@ def croissant_format():
                 mlc.Field(
                     id="images_and_bbox/image_path",
                     name="image_path",
-                    description="",
+                    description="Snapshot Serengeti image path (e.g. S6/P07/P07_R2/S6_P07_R2_IMAG0077.JPG)",
                     data_types=mlc.DataType.TEXT,
                     source=mlc.Source(
                         file_object="train_annotations",
-                        extract=mlc.Extract(json_path="$..image_path"),
+                        extract=mlc.Extract(column="image_path"),
                     ),
                 ),
                 mlc.Field(
                     id="images_and_bbox/image_bboxes",
                     name="image_bboxes",
-                    description="",
-                    data_types=mlc.DataType.BOUNDING_BOX(mlc.Context()),
+                    description="bounding boxes of animal position in each images. [will update data_types=mlc.DataType.BOUNDING_BOX(mlc.Context())]",
+                    data_types=mlc.DataType.TEXT,
                     source=mlc.Source(
                         file_object="train_annotations",
-                        extract=mlc.Extract(json_path="$..bboxes"),
+                        extract=mlc.Extract(column="bboxes"),
+                    ),
+                ),
+                mlc.Field(
+                    id="images_and_bbox/filename",
+                    name="filename",
+                    description="Snapshot Serengeti image name (e.g. S6_P07_R2_IMAG0077.JPG)",
+                    data_types=mlc.DataType.TEXT,
+                    source=mlc.Source(
+                        file_object="train_annotations",
+                        extract=mlc.Extract(column="filename"),
+                    ),
+                ),
+                mlc.Field(
+                    id="images_and_bbox/capture_id",
+                    name="capture_id",
+                    description="Snapshot Serengeti image sequence id (e.g., SER_S6#P07#2#29)",
+                    data_types=mlc.DataType.TEXT,
+                    source=mlc.Source(
+                        file_object="train_annotations",
+                        extract=mlc.Extract(column="capture_id"),
+                    ),
+                ),
+                mlc.Field(
+                    id="images_and_bbox/width",
+                    name="width",
+                    description="Image width (e.g., 2048)",
+                    data_types=mlc.DataType.INTEGER,
+                    source=mlc.Source(
+                        file_object="train_annotations",
+                        extract=mlc.Extract(column="width"),
+                    ),
+                ),
+                mlc.Field(
+                    id="images_and_bbox/height",
+                    name="height",
+                    description="Image height (e.g., 1536)",
+                    data_types=mlc.DataType.INTEGER,
+                    source=mlc.Source(
+                        file_object="train_annotations",
+                        extract=mlc.Extract(column="height"),
+                    ),
+                ),
+                mlc.Field(
+                    id="images_and_bbox/agent1_name",
+                    name="agent1_name",
+                    description="Name of animal species 1 (e.g., zebra)",
+                    data_types=mlc.DataType.TEXT,
+                    source=mlc.Source(
+                        file_object="train_annotations",
+                        extract=mlc.Extract(column="agent1_name"),
+                    ),
+                ),
+                mlc.Field(
+                    id="images_and_bbox/agent1_id",
+                    name="agent1_id",
+                    description="Id of animal species 1 (integer between 1 and 30)",
+                    data_types=mlc.DataType.INTEGER,
+                    source=mlc.Source(
+                        file_object="train_annotations",
+                        extract=mlc.Extract(column="agent1_id"),
+                    ),
+                ),
+                mlc.Field(
+                    id="images_and_bbox/agent1_count",
+                    name="agent1_count",
+                    description="number of animals from species 1",
+                    data_types=mlc.DataType.INTEGER,
+                    source=mlc.Source(
+                        file_object="train_annotations",
+                        extract=mlc.Extract(column="agent1_count"),
+                    ),
+                ),
+                mlc.Field(
+                    id="images_and_bbox/agent2_name",
+                    name="agent2_name",
+                    description="Name of animal species 2 (None if image contains only 1 species)",
+                    data_types=mlc.DataType.TEXT,
+                    source=mlc.Source(
+                        file_object="train_annotations",
+                        extract=mlc.Extract(column="agent2_name"),
+                    ),
+                ),
+                mlc.Field(
+                    id="images_and_bbox/agent2_id",
+                    name="agent2_id",
+                    description="Id of animal species 2 (None if image contains only 1 species)",
+                    data_types=mlc.DataType.INTEGER,
+                    source=mlc.Source(
+                        file_object="train_annotations",
+                        extract=mlc.Extract(column="agent1_id"),
+                    ),
+                ),
+                mlc.Field(
+                    id="images_and_bbox/agent2_count",
+                    name="agent2_count",
+                    description="number of animals from species 2",
+                    data_types=mlc.DataType.INTEGER,
+                    source=mlc.Source(
+                        file_object="train_annotations",
+                        extract=mlc.Extract(column="agent2_count"),
+                    ),
+                ),
+                mlc.Field(
+                    id="images_and_bbox/agent3_name",
+                    name="agent3_name",
+                    description="Name of animal species 3 (None if image contains only 1 species)",
+                    data_types=mlc.DataType.TEXT,
+                    source=mlc.Source(
+                        file_object="train_annotations",
+                        extract=mlc.Extract(column="agent3_name"),
+                    ),
+                ),
+                mlc.Field(
+                    id="images_and_bbox/agent3_id",
+                    name="agent3_id",
+                    description="Id of animal species 3 (None if image contains only 1 species)",
+                    data_types=mlc.DataType.INTEGER,
+                    source=mlc.Source(
+                        file_object="train_annotations",
+                        extract=mlc.Extract(column="agent3_id"),
+                    ),
+                ),
+                mlc.Field(
+                    id="images_and_bbox/agent3_count",
+                    name="agent1_count",
+                    description="number of animals from species 3",
+                    data_types=mlc.DataType.INTEGER,
+                    source=mlc.Source(
+                        file_object="train_annotations",
+                        extract=mlc.Extract(column="agent3_count"),
+                    ),
+                ),
+                mlc.Field(
+                    id="images_and_bbox/activities",
+                    name="activities",
+                    description="list of animal activities",
+                    data_types=mlc.DataType.TEXT,
+                    source=mlc.Source(
+                        file_object="train_annotations",
+                        extract=mlc.Extract(column="activities"),
+                    ),
+                ),
+                mlc.Field(
+                    id="images_and_bbox/activities_id",
+                    name="activities_id",
+                    description="list of ids of animal activities",
+                    data_types=mlc.DataType.TEXT,
+                    source=mlc.Source(
+                        file_object="train_annotations",
+                        extract=mlc.Extract(column="activities_id"),
+                    ),
+                ),
+                mlc.Field(
+                    id="images_and_bbox/environment_id",
+                    name="environment_id",
+                    description="id of environment (lighting condition) of the image",
+                    data_types=mlc.DataType.INTEGER,
+                    source=mlc.Source(
+                        file_object="train_annotations",
+                        extract=mlc.Extract(column="environment_id"),
+                    ),
+                ),
+                mlc.Field(
+                    id="images_and_bbox/novelty_type",
+                    name="novelty_type",
+                    description="interger indentifying the type of novelty in the image",
+                    data_types=mlc.DataType.INTEGER,
+                    source=mlc.Source(
+                        file_object="train_annotations",
+                        extract=mlc.Extract(column="novelty_type"),
                     ),
                 ),
             ],
@@ -88,27 +254,11 @@ def croissant_format():
         name="NOVEL-SS",
         # Descriptions can contain plain text or markdown.
         description=(
-            "Most deployed computer vision systems encounter a wide variety of"
-            " novel situations. Computer vision researchers have studied many kinds of" 
-            " novelty separately including changes in object appearance and style, changes in"
-            " class distribution, novel object classes, novel activities, and novel imaging"
-            " conditions. To detect and respond to these novelties, various techniques have"
-            " been developed including novelty detection, invariant feature discovery, meta"
-            " learning, transfer learning, active learning, continual learning, domain"
-            " adaptation, and so on. Benchmarks corresponding to each of these problems and"
-            " techniques have been developed. This paper argues that it is time for the field to"
-            " integrate these various novelty detection and accommodation techniques into a"
-            " single system that can detect and accommodate many types of novelty. To"
-            " promote this effort, we introduce Novel-Snapshot Serengeti (Novel-SS), a"
-            " benchmark derived from the Snapshot Serengeti camera trap dataset collected by a"
-            " network of 225 camera traps deployed in Serengeti National Park (Tanzania). In this"
-            " application, many forms of novelty arise. In our Novel-SS protocol, the vision system has"
-            " the option to request annotations for individual images, which allows it to obtain a small"
-            " amount of supervised data through active learning. The overall goal is to maximize task"
-            " performance while minimizing the number of requested annotations. This paper describes the"
-            " training data, performance task, types of novelty, evaluation protocol, and evaluation"
-            " metrics. To demonstrate the feasibility of the task, we present a novelty-aware"
-            " system, DCA-SS, and compare it to a baseline system that is completely unaware of novelty."
+            "Novel-Snapshot Serengeti (Novel-SS), is a benchmark derived from the"
+            " Snapshot Serengeti camera trap dataset collected by a network of 225 camera traps"
+            " deployed in Serengeti National Park (Tanzania). NOVEL-SS offers many forms of novelty"
+            " including: novel species, novel activity, novel combination of species, novel combination"
+            "of activities, and novel environment (e.g. dawn, dusk, night time, snow and fog)."
         ),
         cite_as=(
             "@misc{tematelewo2024novelss, title={Novel-SS: A Benchmark for Integrated Novelty-Aware"
@@ -116,9 +266,11 @@ def croissant_format():
             " and Fuxin, Li and Lee, Stefan and Dietterich, Thomas G}, booktitle = {openreview},"
             " month = {June}, year = {2024},"
         ),
-        url="https://github.com/Irenetema/NOVEL_SS",
         distribution=distribution,
         record_sets=record_sets,
+        url="https://github.com/Irenetema/NOVEL_SS",
+        version="1.0",
+        license="GPL-3.0",
     )
 
     return metadata
